@@ -20,14 +20,6 @@ export default function Lists({ todoData, setTodoData }) {
     setTodoData(newTodoData);
   };
 
-  const listStyle = (completed) => {
-    return {
-      padding: "10px",
-      borderBotton: "1px #ccc dotted",
-      textDecoration: completed ? "line-through" : "none",
-    };
-  };
-
   const handleClick = (id) => {
     let newTodoData = todoData.filter((data) => data.id !== id);
     setTodoData(newTodoData);
@@ -36,16 +28,26 @@ export default function Lists({ todoData, setTodoData }) {
   return (
     <div>
       {todoData.map((data) => (
-        <div style={listStyle(data.completed)} key={data.id}>
-          <input
-            type="checkbox"
-            onChange={() => handleCompleChange(data.id)}
-            defaultChecked={false}
-          />{" "}
-          {data.title}
-          <button style={btnStyle} onClick={() => handleClick(data.id)}>
-            x
-          </button>
+        <div key={data.id}>
+          <div
+            className={`flex items-center justify-between w-full px-4 py-1 my-2 text-gray-600 bg-gray-100 border rounded`}
+          >
+            <div className="items-center">
+              <input
+                type="checkbox"
+                onChange={() => handleCompleChange(data.id)}
+                defaultChecked={false}
+              />{" "}
+              <span className={data.completed && "line-through"}>
+                {data.title}
+              </span>
+            </div>
+            <div className="items-center">
+              <button style={btnStyle} onClick={() => handleClick(data.id)}>
+                x
+              </button>
+            </div>
+          </div>
         </div>
       ))}
     </div>
