@@ -10,5 +10,5 @@ test("renders learn react link", () => {
     name: "lintTest",
   });
 
-  expect(lintTest.textContent).toBe("lintTest");
+  expect(lintTest).toHaveTextContent("lintTest");
 });
