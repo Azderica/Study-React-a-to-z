@@ -1,24 +1,56 @@
-import { NextPage } from 'next'
+import type { NextPage } from 'next'
 import Head from 'next/head'
 import homeStyles from '../styles/Home.module.css'
-import React from 'react'
+import { GetStaticProps } from 'next'
+import { getSortedPostsData } from '../lib/posts'
+import Link from 'next/link'
 
-const Home: NextPage = () => {
+const Home = ({ allPostsData }: {
+  allPostsData: {
+    date: string
+    title: string
+    id: string
+  }[]
+}) => {
   return (
     <div>
       <Head>
-        <title>Myeonghun</title>
+        <title>Your Name</title>
       </Head>
-      <section>
-        <p>Hi</p>
-        <p>This is a website</p>
+      <section className={homeStyles.headingMd}>
+        <p>[Your Self Introduction]</p>
+        <p>
+          (This is a website)
+        </p>
       </section>
       <section className={`${homeStyles.headingMd} ${homeStyles.padding1px}`}>
         <h2 className={homeStyles.headingLg}>Blog</h2>
-        <ul className={homeStyles.list}></ul>
-      </section>    
+        <ul className={homeStyles.list}>
+          {allPostsData.map(({ id, date, title }) => (
+            <li className={homeStyles.listItem} key={id}>
+              <Link legacyBehavior href={`/posts/${id}`}>
+                <a>{title}</a>
+              </Link>
+              <br />
+              <small className={homeStyles.lightText}>
+                {date}
+              </small>
+            </li>
+          ))}
+        </ul>
+      </section>
     </div>
   )
 }
 
-export default Home;
+export default Home
+
+
+export const getStaticProps: GetStaticProps = async () => {
+  const allPostsData = getSortedPostsData()
+  return {
+    props: {
+      allPostsData
+    }
+  }
+}
