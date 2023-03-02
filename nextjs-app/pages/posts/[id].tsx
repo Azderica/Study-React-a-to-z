@@ -1,4 +1,3 @@
-
 import { getAllPostIds, getPostData } from '../../lib/posts'
 import Head from 'next/head'
 import homeStyles from '../../styles/home.module.css'
